@@ -20,11 +20,8 @@ const AnimatedRoutes = () => {
   const location = useLocation();
 
   return (
-    <Routes location={location} key={location.pathname}>
-      {/* Wrap only the Home route with TransitionLayout */}
-      <Route element={<TransitionLayout />}>
-        <Route path="/" element={<Home />} />
-      </Route>
+    <Routes>
+      <Route path="/" element={<Home />} />
 
       {/* Other routes without TransitionLayout */}
       <Route path="/auth" element={<Auth />} />
