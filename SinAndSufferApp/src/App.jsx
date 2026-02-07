@@ -9,6 +9,7 @@ import {
 // Pages & Components
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
+import History from "./pages/History";
 import Mouse from "./components/mouse";
 import AskTheAbyss from "./components/AskTheAbyss";
 import Navbar from "./components/Navbar";
@@ -25,6 +26,7 @@ const AnimatedRoutes = () => {
 
       {/* Other routes without TransitionLayout */}
       <Route path="/auth" element={<Auth />} />
+      <Route path="/history" element={<History />} />
       <Route
         path="/ask-the-abyss"
         element={

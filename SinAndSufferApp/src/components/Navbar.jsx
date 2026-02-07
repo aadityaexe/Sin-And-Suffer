@@ -58,6 +58,19 @@ const Navbar = () => {
               <span className="block h-[2px] w-0 group-hover:w-full bg-pink-600 transition-all duration-300 absolute bottom-[-4px] left-0"></span>
             </a>
           </li>
+          <li>
+            <a
+              href="/history"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/history");
+              }}
+              className="text-pink-100 hover:text-pink-500 transition duration-300 relative group"
+            >
+              Your Sins
+              <span className="block h-[2px] w-0 group-hover:w-full bg-pink-600 transition-all duration-300 absolute bottom-[-4px] left-0"></span>
+            </a>
+          </li>
         </ul>
 
         {/* Hamburger Icon */}
@@ -103,6 +116,19 @@ const Navbar = () => {
                 className="text-pink-100 hover:text-pink-400 transition"
               >
                 Gallery of Pain
+              </a>
+            </li>
+            <li>
+              <a
+                href="/history"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate("/history");
+                  toggleMenu();
+                }}
+                className="text-pink-100 hover:text-pink-400 transition"
+              >
+                Your Sins
               </a>
             </li>
           </ul>

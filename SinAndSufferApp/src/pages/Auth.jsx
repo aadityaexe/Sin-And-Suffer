@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 
 const Auth = () => {
@@ -29,59 +30,36 @@ const Auth = () => {
     );
   }, [isLogin, forgotMode]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const storedUsers = JSON.parse(localStorage.getItem("sinful_users")) || [];
 
     if (!email || !password || (!isLogin && !name)) {
       toast.error("All fields are required.");
       return;
     }
 
-    if (isLogin) {
-      const user = storedUsers.find(
-        (u) => u.email === email && u.password === password
-      );
-      if (user) {
-        toast.success("Welcome back to the Abyss!");
-        setTimeout(() => navigate("/ask-the-abyss"), 1000);
-      } else {
-        toast.error("Invalid email or password.");
-      }
-    } else {
-      const userExists = storedUsers.some((u) => u.email === email);
-      if (userExists) {
-        toast.error("This email is already bound to a soul.");
-        return;
-      }
-      const newUser = { name, email, password };
-      localStorage.setItem(
-        "sinful_users",
-        JSON.stringify([...storedUsers, newUser])
-      );
-      toast.success("You have signed the pact successfully.");
-      setIsLogin(true);
+    try {
+      const url = isLogin
+        ? "http://localhost:5000/api/users/login"
+        : "http://localhost:5000/api/users/register";
+      
+      const payload = isLogin ? { email, password } : { name, email, password };
+
+      const { data } = await axios.post(url, payload);
+
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      toast.success(isLogin ? "Welcome back to the Abyss!" : "You have signed the pact successfully.");
+      
+      setTimeout(() => navigate("/ask-the-abyss"), 1000);
+
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong.");
     }
   };
 
   const handleForgotPassword = (e) => {
     e.preventDefault();
-    if (!email) {
-      toast.error("Enter your email to recover the password.");
-      return;
-    }
-
-    const storedUsers = JSON.parse(localStorage.getItem("sinful_users")) || [];
-    const user = storedUsers.find((u) => u.email === email);
-
-    if (user) {
-      toast.info(`Your password: ${user.password}`, { autoClose: 5000 });
-      setForgotMode(false);
-      setIsLogin(true);
-    } else {
-      toast.error("No damned soul found with this email.");
-    }
+    toast.info("Password recovery is not yet implemented by the dark lords.");
   };
 
   return (

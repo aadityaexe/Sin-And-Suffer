@@ -46,7 +46,7 @@ Use their confession to hurt them, arouse them, and break them.
 `;
 
     try {
-      const result = await run(prompt);
+      const result = await run(prompt, input);
       setResponse(result);
       if (result?.trim()) {
         speakWithElevenLabs(result);
